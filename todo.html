@@ -1,0 +1,103 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Document</title>
+</head>
+<body>
+    <style>
+        body {
+          font-family: Arial, sans-serif;
+          padding: 20px;
+          background: #f9f9f9;
+          text-align: center;
+        }
+    
+        h2 {
+          color: #333;
+        }
+    
+        #todoInput {
+          padding: 10px;
+          width: 250px;
+          font-size: 16px;
+        }
+    
+        button {
+          padding: 10px;
+          font-size: 16px;
+          margin-left: 5px;
+          cursor: pointer;
+        }
+    
+        ul {
+          list-style-type: none;
+          padding: 0;
+        }
+    
+        li {
+          background: #fff;
+          padding: 10px;
+          margin: 5px 0;
+          border-radius: 8px;
+          display: flex;
+          justify-content: space-between;
+          align-items: center;
+          box-shadow: 0 1px 3px rgba(0,0,0,0.1);
+        }
+    
+        .completed {
+          text-decoration: line-through;
+          color: #888;
+        }
+    
+        .delete-btn {
+          background: red;
+          color: white;
+          border: none;
+          padding: 5px 10px;
+          border-radius: 5px;
+        }
+    
+        .label-text {
+          flex: 1;
+          cursor: pointer;
+        }
+      </style>
+</head>
+<body>
+
+<h2>📝 My To-Do Labels</h2>
+<input type="text" id="todoInput" placeholder="Enter a task label">
+<button onclick="addTodo()">Add</button>
+
+<ul id="todoList"></ul>
+
+<script>
+  function addTodo() {
+    const input = document.getElementById("todoInput");
+    const text = input.value.trim();
+    if (text === "") return;
+
+    const li = document.createElement("li");
+
+    const span = document.createElement("span");
+    span.textContent = text;
+    span.classList.add("label-text");
+    span.onclick = () => span.classList.toggle("completed");
+
+    const delBtn = document.createElement("button");
+    delBtn.textContent = "Delete";
+    delBtn.className = "delete-btn";
+    delBtn.onclick = () => li.remove();
+
+    li.appendChild(span);
+    li.appendChild(delBtn);
+
+    document.getElementById("todoList").appendChild(li);
+    input.value = "";
+  }
+</script>
+</body>
+</html>
