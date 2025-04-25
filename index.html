@@ -6,98 +6,119 @@
     <title>Document</title>
 </head>
 <body>
-    <style>
-        body {
-          font-family: Arial, sans-serif;
-          padding: 20px;
-          background: #f9f9f9;
-          text-align: center;
-        }
-    
-        h2 {
-          color: #333;
-        }
-    
-        #todoInput {
-          padding: 10px;
-          width: 250px;
-          font-size: 16px;
-        }
-    
-        button {
-          padding: 10px;
-          font-size: 16px;
-          margin-left: 5px;
-          cursor: pointer;
-        }
-    
-        ul {
-          list-style-type: none;
-          padding: 0;
-        }
-    
-        li {
-          background: #fff;
-          padding: 10px;
-          margin: 5px 0;
-          border-radius: 8px;
-          display: flex;
-          justify-content: space-between;
-          align-items: center;
-          box-shadow: 0 1px 3px rgba(0,0,0,0.1);
-        }
-    
-        .completed {
-          text-decoration: line-through;
-          color: #888;
-        }
-    
-        .delete-btn {
-          background: red;
-          color: white;
-          border: none;
-          padding: 5px 10px;
-          border-radius: 5px;
-        }
-    
-        .label-text {
-          flex: 1;
-          cursor: pointer;
-        }
-      </style>
+  <style>
+    body {
+      font-family: Arial, sans-serif;
+      padding: 20px;
+      background: #f0f2f5;
+      text-align: center;
+    }
+
+    h2 {
+      color: #333;
+    }
+
+    input[type="text"] {
+      padding: 10px;
+      width: 250px;
+      font-size: 16px;
+    }
+
+    button {
+      padding: 10px;
+      font-size: 16px;
+      margin-left: 5px;
+      cursor: pointer;
+    }
+
+    ul {
+      list-style: none;
+      padding: 0;
+    }
+
+    li {
+      background: #fff;
+      padding: 10px;
+      margin: 5px 0;
+      border-radius: 8px;
+      display: flex;
+      align-items: center;
+      box-shadow: 0 1px 3px rgba(0,0,0,0.1);
+    }
+
+    li input[type="checkbox"] {
+      margin-right: 10px;
+      transform: scale(1.2);
+    }
+
+    .task-text {
+      flex: 1;
+      border: none;
+      background: none;
+      font-size: 16px;
+    }
+
+    .task-text[readonly] {
+      color: #555;
+    }
+
+    li.checked .task-text {
+      text-decoration: line-through;
+      color: #aaa;
+    }
+
+    .delete-btn {
+      background: red;
+      color: white;
+      border: none;
+      padding: 5px 10px;
+      border-radius: 5px;
+      margin-left: 10px;
+    }
+  </style>
 </head>
 <body>
 
-<h2>📝 My To-Do Labels</h2>
-<input type="text" id="todoInput" placeholder="Enter a task label">
-<button onclick="addTodo()">Add</button>
+  <h2>📝 My To-Do Labels </h2>
+  <input type="text" id="taskInput" placeholder="Add a task...">
+  <button onclick="addTask()">Add</button>
 
-<ul id="todoList"></ul>
+  <ul id="taskList"></ul>
 
-<script>
-  function addTodo() {
-    const input = document.getElementById("todoInput");
-    const text = input.value.trim();
-    if (text === "") return;
+  <script>
+    function addTask() {
+      const input = document.getElementById("taskInput");
+      const text = input.value.trim();
+      if (text === "") return;
 
-    const li = document.createElement("li");
+      const li = document.createElement("li");
 
-    const span = document.createElement("span");
-    span.textContent = text;
-    span.classList.add("label-text");
-    span.onclick = () => span.classList.toggle("completed");
+      const checkbox = document.createElement("input");
+      checkbox.type = "checkbox";
 
-    const delBtn = document.createElement("button");
-    delBtn.textContent = "Delete";
-    delBtn.className = "delete-btn";
-    delBtn.onclick = () => li.remove();
+      const taskInput = document.createElement("input");
+      taskInput.type = "text";
+      taskInput.className = "task-text";
+      taskInput.value = text;
 
-    li.appendChild(span);
-    li.appendChild(delBtn);
+      // Toggle editable based on checked
+      checkbox.onchange = () => {
+        li.classList.toggle("checked");
+        taskInput.readOnly = checkbox.checked;
+      };
 
-    document.getElementById("todoList").appendChild(li);
-    input.value = "";
-  }
-</script>
+      const delBtn = document.createElement("button");
+      delBtn.textContent = "Delete";
+      delBtn.className = "delete-btn";
+      delBtn.onclick = () => li.remove();
+
+      li.appendChild(checkbox);
+      li.appendChild(taskInput);
+      li.appendChild(delBtn);
+
+      document.getElementById("taskList").appendChild(li);
+      input.value = "";
+    }
+  </script>
 </body>
 </html>
